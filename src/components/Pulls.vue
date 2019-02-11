@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<b-card class="bottom-5" v-for="pull in pulls" :key="pull.id">
-			<h5 class="text-danger"><a :href="pull.html_url" target="_blank">{{ pull.title }} <span class="text-secondary">#{{ pull.number }}</span></a></h5>
+			<h5><a :href="pull.html_url" target="_blank">{{ pull.title }} <span class="text-secondary">#{{ pull.number }}</span></a></h5>
 			<p>
 				<strong>Created At: </strong> <strong class="text-secondary">{{ formatDate(pull.created_at) }}</strong> -
 				<strong>Updated At: </strong> <strong class="text-secondary">{{ formatDate(pull.updated_at) }}</strong>
@@ -41,15 +41,15 @@ export default {
 		]),
 		async fetchPulls() {
 			let pulls = await fetch(`${this.url}`).then(resp => resp.json())
-			
+
 			pulls = pulls.filter(pull => {
 				const now = moment().isoWeekday(1)
 				const pullDate = moment(pull.created_at).isoWeekday(1)
-				
+
 				return now.isSame(pullDate, 'week')
 			})
-			
-			
+
+
 			return new Promise((resolve, reject) => {
 				try {
 					this.fillPulls(pulls)

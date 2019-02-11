@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<b-card class="bottom-5" v-for="issue in issues" :key="issue.id">
-			<h5 class="text-danger"><a :href="issue.html_url" target="_blank">{{ issue.title }} <span class="text-secondary">#{{ issue.number }}</span></a></h5>
+			<h5><a :href="issue.html_url" target="_blank">{{ issue.title }} <span class="text-secondary">#{{ issue.number }}</span></a></h5>
 			<p>
-				<strong>Created At: </strong> <strong class="text-secondary">{{ formatDate(issue.created_at) }}</strong> - 
+				<strong>Created At: </strong> <strong class="text-secondary">{{ formatDate(issue.created_at) }}</strong> -
 				<strong>Updated At: </strong> <strong class="text-secondary">{{ formatDate(issue.updated_at) }}</strong>
 			</p>
 			<p v-html="parseBody(issue.body)"></p>
@@ -34,7 +34,7 @@ export default {
 		.then(() => {
 			this.makeImagesResponsive()
 		})
-		
+
 	},
 	methods: {
 		...mapActions('issues', [
@@ -42,14 +42,14 @@ export default {
 		]),
 		async fetchIssues() {
 			let issues = await fetch(`${this.url}`).then(resp => resp.json())
-			
+
 			issues = issues.filter(issue => {
 				const now = moment().isoWeekday(1)
 				const issueDate = moment(issue.created_at).isoWeekday(1)
-				
+
 				return now.isSame(issueDate, 'week')
 			})
-			
+
 			return new Promise((resolve, reject) => {
 				try {
 					this.fillIssues(issues)
@@ -58,7 +58,7 @@ export default {
 					reject({ok: false})
 				}
 			})
-			
+
 		},
 		parseBody(body) {
 			return marked(body)

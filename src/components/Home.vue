@@ -1,16 +1,16 @@
 <template>
-    <div class="container-fluid">
+    <div class="container">
         <div class="jumbotron">
-            <h3>Dev.to Weekly Recap!</h3>
+            <h2>Dev.to Weekly Recap</h2>
             <p>Results between {{ beginDate }} and {{ endDate }}</p>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <h3 class="text-primary">Pull Requests</h3>
+                <h3 class="mb-4">Pull Requests</h3>
                 <pulls />
             </div>
             <div class="col-md-6">
-                <h3 class="text-primary">Issues</h3>
+                <h3 class="mb-4">Issues</h3>
                 <issues />
             </div>
         </div>
