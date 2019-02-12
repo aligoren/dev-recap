@@ -46,8 +46,8 @@ export default {
 			issues = issues.filter(issue => {
 				const now = moment().isoWeekday(1)
 				const issueDate = moment(issue.created_at).isoWeekday(1)
-
-				return now.isSame(issueDate, 'week')
+				const isPullRequest = issue.hasOwnProperty('pull_request')
+				return now.isSame(issueDate, 'week') && !isPullRequest
 			})
 
 			return new Promise((resolve, reject) => {
